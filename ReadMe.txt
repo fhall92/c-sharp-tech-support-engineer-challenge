@@ -1,0 +1,39 @@
+Technical Support Engineer Challenge
+Fran Hall
+
+My Approach
+I chose to attempt to solve this challenge in C# as was the stated preferred technology. This posed an interesting challenge as, normally, if I were faced with this challenge without constraints, 
+I would be likely drawn to solving it using Python with the aid of a library such as Pandas to handle any operations regarding a CSV file.
+Firstly, I made myself familiar with the structure of the given CSV files for testing my solution against. Here, 
+I could determine which column stored the phone numbers to be formatted.
+
+PhoneFormatter.cs
+My approach was to write a function that would carry out a few steps in sequence:
+1. Read in a CSV file
+2. Create a new CSV file to be written to. Here “_REFORMATED” is appended to the original filename. 
+   This new file is then initialized, as the column headers are entered as the first line.
+3. Iterate through the input file by line.
+4. Store each line in a string array (Effectively storing each row)
+5. Split each line into fields, split by commas (Effectively storing each column)
+* I ran into a problem early on wherein the address field may have commas and would therefore 
+   be split into more fields than were intended. This was prevented using Regex in order to ignore commas which were enclosed in double quotes.
+6. Check if the number in the phone field (field[2]) is in Irish or International format, or if it is an invalid number. 
+   If the number is in Irish format, reformat it to International format.
+7. The column is then written to the new CSV file, and the loop continues until each line of the original CSV file is visited.
+ 
+Testing
+PhoneFormatterTest.cs tests the main functionality of the PhoneFormatter class.
+Tests carried out in this file include testing the return value of the formatInternational() method and how it handles invalid inputs.
+Also tested here is the phoneFormat() method, whether the number of rows matches between the input and output CSV files and 
+the error handling for files that don’t exist in the directory.
+
+Possible Improvements
+One potential flaw of PhoneFormatter currently is that it is written to format phone numbers in CSV files 
+structured in a specific way, that is, with phone numbers stored in the same column as in the given CSV files. 
+Essentially, phone numbers won’t be formatted unless they are stored in the third column of the input file.
+Potentially, this could be improved by identifying a column in any CSV which stores phone numbers by searching 
+each field in a row to find a format that matches that of a phone number.
+
+Another possible improvement involves the way in which input files are read into PhoneFormatter, which is manually. 
+To aid efficiency, it may be beneficial to allow PhoneFormatter to search specific directories for CSV files and 
+processing them without the need for each file name to be read in.
